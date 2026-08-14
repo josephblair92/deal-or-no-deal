@@ -1,4 +1,3 @@
-import config from "eslint-config-xo";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import tsESLint from "typescript-eslint";
 import { defineConfig } from "eslint/config";
