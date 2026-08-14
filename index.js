@@ -129,5 +129,7 @@ for (const [index, numCases] of caseNumbersPerRound.entries()) {
   }
 }
 
-console.log(`Your case contained: ${formatterUSD.format(cases[userCase].amount)}`)
+console.log(
+  `Your case contained: ${formatterUSD.format(cases[userCase].amount)}`,
+)
 rl.close()
