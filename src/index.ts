@@ -1,5 +1,11 @@
 import readline from "readline/promises"
 
+interface CaseData {
+  amount: number
+  opened: boolean
+  userCase: boolean
+}
+
 const CONSOLE_RESET = "\x1b[0m"
 const CONSOLE_RED = "\x1b[31m"
 const CONSOLE_GREEN = "\x1b[32m"
@@ -21,7 +27,7 @@ const rl = readline.createInterface({
 })
 
 const amountsCopy = [...amounts]
-const cases = []
+const cases: Array<CaseData> = []
 
 while (amountsCopy.length) {
   const index = Math.floor(Math.random() * amountsCopy.length)
@@ -63,7 +69,7 @@ const promptForUnopenedCase = async () => {
   }
 }
 
-const promptForCases = async (numCases) => {
+const promptForCases = async (numCases: number) => {
   for (let i = 0; i < numCases; i++) {
     const index = await promptForUnopenedCase()
     cases[index].opened = true
@@ -72,7 +78,7 @@ const promptForCases = async (numCases) => {
   }
 }
 
-const calculateDealAmount = (roundNum) => {
+const calculateDealAmount = (roundNum: number) => {
   const unrevealedAmounts = cases
     .filter((curCase) => !curCase.opened)
     .map((curCase) => curCase.amount)
@@ -83,7 +89,7 @@ const calculateDealAmount = (roundNum) => {
   return Math.floor(avgAmount * roundMultiplier)
 }
 
-const promptForDeal = async (roundNum) => {
+const promptForDeal = async (roundNum: number) => {
   const dealAmount = calculateDealAmount(roundNum)
   const response = await rl.question(
     `Offer: ${formatterUSD.format(dealAmount)}. Deal or no deal? `,
