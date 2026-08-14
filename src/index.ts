@@ -13,17 +13,17 @@ const CONSOLE_YELLOW = "\x1b[33m"
 
 const amounts = [
   0.01, 1, 5, 10, 25, 50, 75, 100, 200, 300, 400, 500, 750, 1000, 5000, 10000,
-  25000, 50000, 75000, 100000, 200000, 300000, 400000, 500000, 750000, 1000000,
+  25000, 50000, 75000, 100000, 200000, 300000, 400000, 500000, 750000, 1000000
 ]
 const formatterUSD = Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
   minimumFractionDigits: 0,
-  maximumFractionDigits: 2,
+  maximumFractionDigits: 2
 })
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 })
 
 const amountsCopy = [...amounts]
@@ -92,7 +92,7 @@ const calculateDealAmount = (roundNum: number) => {
 const promptForDeal = async (roundNum: number) => {
   const dealAmount = calculateDealAmount(roundNum)
   const response = await rl.question(
-    `Offer: ${formatterUSD.format(dealAmount)}. Deal or no deal? `,
+    `Offer: ${formatterUSD.format(dealAmount)}. Deal or no deal? `
   )
   return response === "yes" || response === "y"
 }
@@ -101,7 +101,7 @@ const renderByAmount = () => {
   const sortedCases = cases.toSorted((a, b) => a.amount - b.amount)
   for (const curCase of sortedCases) {
     console.log(
-      `${curCase.opened ? CONSOLE_RED : CONSOLE_GREEN} ${formatterUSD.format(curCase.amount)} ${CONSOLE_RESET}`,
+      `${curCase.opened ? CONSOLE_RED : CONSOLE_GREEN} ${formatterUSD.format(curCase.amount)} ${CONSOLE_RESET}`
     )
   }
 }
@@ -111,9 +111,9 @@ const renderCases = () => {
     cases
       .map(
         (curCase, index) =>
-          `${curCase.userCase ? CONSOLE_YELLOW : curCase.opened ? CONSOLE_RED : CONSOLE_GREEN}${index + 1}${CONSOLE_RESET}`,
+          `${curCase.userCase ? CONSOLE_YELLOW : curCase.opened ? CONSOLE_RED : CONSOLE_GREEN}${index + 1}${CONSOLE_RESET}`
       )
-      .join(" "),
+      .join(" ")
   )
 }
 
@@ -122,7 +122,7 @@ cases[userCase].userCase = true
 
 const caseNumbersPerRound = [
   ...[...Array(7).keys()].slice(1).reverse(),
-  ...Array(3).fill(1),
+  ...Array(3).fill(1)
 ]
 
 for (const [index, numCases] of caseNumbersPerRound.entries()) {
@@ -136,6 +136,6 @@ for (const [index, numCases] of caseNumbersPerRound.entries()) {
 }
 
 console.log(
-  `Your case contained: ${formatterUSD.format(cases[userCase].amount)}`,
+  `Your case contained: ${formatterUSD.format(cases[userCase].amount)}`
 )
 rl.close()
