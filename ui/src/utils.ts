@@ -20,7 +20,7 @@ export const shuffleCases = () => {
     while (amountsCopy.length) {
         const index = Math.floor(Math.random() * amountsCopy.length)
         const [amount] = amountsCopy.splice(index, 1)
-        cases.push({ caseNum: count, amount, opened: false, userCase: false })
+        cases.push({ id: count, amount, opened: false, userCase: false })
         count++
     }
     return cases

@@ -1,5 +1,5 @@
 export interface CaseProps {
-    caseNum: number,
+    id: number,
     amount: number,
     opened: boolean,
     userCase: boolean
