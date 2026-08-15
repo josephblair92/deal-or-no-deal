@@ -13,9 +13,11 @@ function App() {
 
   const [cases, setCases] = useState<Array<CaseProps>>(shuffleCases())
   const [userCaseSelected, setUserCaseSelected] = useState(false)
+  const [userCaseValue, setUserCaseValue] = useState(0)
   const [round, setRound] = useState(0)
   const [casesLeftInRound, setCasesLeftInRound] = useState(0)
   const [gameOver, setGameOver] = useState(false)
+  const [dealAccepted, setDealAccepted] = useState<number>()
 
   const advanceRound = () => {
     if (round === casesPerRound.length) {
@@ -38,8 +40,8 @@ function App() {
   }
 
   const selectUserCase = (caseNum: number) => {
+    const index = caseNum - 1
     setCases(cases => {
-      const index = caseNum - 1
       return [
         ...cases.slice(0, index),
         { ...cases[index], userCase: true },
@@ -48,6 +50,7 @@ function App() {
       return cases
     })
     setUserCaseSelected(true)
+    setUserCaseValue(cases[index].amount)
     advanceRound()
   }
 
@@ -64,8 +67,9 @@ function App() {
     setCasesLeftInRound(casesLeftInRound => casesLeftInRound - 1)
   }
 
-  const acceptDeal = () => {
+  const acceptDeal = (amount: number) => {
     setGameOver(true)
+    setDealAccepted(amount)
   }
 
   const rejectDeal = () => {
@@ -74,16 +78,22 @@ function App() {
 
   let gameStatus
   if (gameOver) {
-    gameStatus = <p className='text-2xl'>Game over.</p>
+    gameStatus = <div>
+      <p className='text-2xl'>Game over.</p>
+      {dealAccepted 
+        ? (<p>You accepted a deal of <b>{formatterUSD.format(dealAccepted)}</b>. Your case was worth <b>{formatterUSD.format(userCaseValue)}</b>.</p>)
+        : (<p>Your case was worth <b>{formatterUSD.format(userCaseValue)}</b>.</p>)}
+    </div>
   }
   else if (!userCaseSelected) {
     gameStatus = <p className='text-2xl'>Select your case.</p>
   } else if (casesLeftInRound === 0) {
+    const dealAmount = calculateDealAmount(round)
     gameStatus = <div className='flex flex-col gap-2'>
       <p className='text-2xl'>Deal or No Deal?</p>
-      <p>Offer: <b>{formatterUSD.format(calculateDealAmount(round))}</b></p>
+      <p>Offer: <b>{formatterUSD.format(dealAmount)}</b></p>
       <div className='flex gap-3'>
-        <button className='bg-green-400 rounded-md p-3 min-w-32' onClick={acceptDeal}>Deal</button>
+        <button className='bg-green-400 rounded-md p-3 min-w-32' onClick={() => acceptDeal(dealAmount)}>Deal</button>
         <button className='bg-red-400 rounded-md p-3 min-w-32' onClick={rejectDeal}>No Deal</button>
       </div>
     </div>
