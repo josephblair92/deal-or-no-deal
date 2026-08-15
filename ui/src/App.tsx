@@ -93,12 +93,12 @@ function App() {
 
   return (
     <div className='flex h-screen'>
-      <div className='w-1/2 h-fit'>
-        <Cases cases={cases} allCasesEnabled={!userCaseSelected} allCasesDisabled={casesLeftInRound === 0} onClick={!userCaseSelected ? selectUserCase : openCase} showAllAmounts={gameOver} />
-      </div>
-      <div className='flex flex-col w-1/2 h-full p-2 justify-between'>
+      <div className='flex flex-col w-1/2 h-full p-3 justify-between'>
         {gameStatus}
         <DollarAmounts cases={cases} />
+      </div>
+      <div className='w-1/2 h-full'>
+        <Cases cases={cases} allCasesEnabled={!userCaseSelected} allCasesDisabled={casesLeftInRound === 0} onClick={!userCaseSelected ? selectUserCase : openCase} showAllAmounts={gameOver} />
       </div>
     </div>
   )

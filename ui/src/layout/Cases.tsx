@@ -10,7 +10,7 @@ interface CasesProps {
 }
 
 export const Cases = ({ cases, allCasesDisabled, allCasesEnabled, showAllAmounts, onClick }: CasesProps) => {
-    return <div className='flex flex-wrap gap-3 h-fit p-3'>
+    return <div className='flex flex-wrap gap-3 h-full p-3'>
         {cases.map((curCase: CaseProps) => <Case {...curCase} enabled={allCasesEnabled || (!allCasesDisabled && !curCase.opened && !curCase.userCase)} showAmount={showAllAmounts || curCase.opened} onClick={() => onClick(curCase.id)} key={curCase.id} />)}
     </div>
 }
