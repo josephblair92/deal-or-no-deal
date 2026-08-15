@@ -1,5 +1,5 @@
 import type { CaseProps } from "../types";
-import { DollarAmount } from "./DollarAmount";
+import { DollarAmount } from "../components/DollarAmount";
 
 export interface DollarAmountsProps {
     cases: Array<CaseProps>

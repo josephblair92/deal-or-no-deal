@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { Case } from './ui/Case'
-import { formatterUSD, shuffleCases } from './utils'
+import { shuffleCases } from './utils'
 import type { CaseProps } from './types'
-import { DollarAmounts } from './ui/DollarAmounts'
+import { DollarAmounts } from './layout/DollarAmounts'
+import { GameOver } from './layout/GameOver'
+import { DealOffer } from './layout/DealOffer'
+import { Cases } from './layout/Cases'
 
 const casesPerRound = [
   ...[...Array(7).keys()].slice(1).reverse(),
@@ -78,33 +80,21 @@ function App() {
 
   let gameStatus
   if (gameOver) {
-    gameStatus = <div>
-      <p className='text-2xl'>Game over.</p>
-      {dealAccepted 
-        ? (<p>You accepted a deal of <b>{formatterUSD.format(dealAccepted)}</b>. Your case was worth <b>{formatterUSD.format(userCaseValue)}</b>.</p>)
-        : (<p>Your case was worth <b>{formatterUSD.format(userCaseValue)}</b>.</p>)}
-    </div>
+    gameStatus = <GameOver dealAccepted={dealAccepted} userCaseValue={userCaseValue} />
   }
   else if (!userCaseSelected) {
     gameStatus = <p className='text-2xl'>Select your case.</p>
   } else if (casesLeftInRound === 0) {
     const dealAmount = calculateDealAmount(round)
-    gameStatus = <div className='flex flex-col gap-2'>
-      <p className='text-2xl'>Deal or No Deal?</p>
-      <p>Offer: <b>{formatterUSD.format(dealAmount)}</b></p>
-      <div className='flex gap-3'>
-        <button className='bg-green-400 rounded-md p-3 min-w-32' onClick={() => acceptDeal(dealAmount)}>Deal</button>
-        <button className='bg-red-400 rounded-md p-3 min-w-32' onClick={rejectDeal}>No Deal</button>
-      </div>
-    </div>
+    gameStatus = <DealOffer dealAmount={dealAmount} onAccept={acceptDeal} onReject={rejectDeal} />
   } else {
     gameStatus = <div><p className='text-2xl'>Open a case.</p><p>You have <b>{casesLeftInRound}</b> left to open before the next offer.</p></div>
   }
 
   return (
     <div className='flex h-screen'>
-      <div className='flex flex-wrap gap-3 w-1/2 h-fit p-3'>
-        {cases.map((curCase: CaseProps) => <Case {...curCase} enabled={!userCaseSelected || (casesLeftInRound > 0 && !curCase.opened && !curCase.userCase)} showAmount={curCase.opened || gameOver} onClick={!userCaseSelected ? selectUserCase : openCase} key={curCase.id} />)}
+      <div className='w-1/2 h-fit'>
+        <Cases cases={cases} allCasesEnabled={!userCaseSelected} allCasesDisabled={casesLeftInRound === 0} onClick={!userCaseSelected ? selectUserCase : openCase} showAllAmounts={gameOver} />
       </div>
       <div className='flex flex-col w-1/2 h-full p-2 justify-between'>
         {gameStatus}
