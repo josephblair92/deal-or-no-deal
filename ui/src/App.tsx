@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import { shuffleCases } from './utils'
-import type { CaseProps } from './types'
-import { DollarAmounts } from './layout/DollarAmounts'
-import { GameOver } from './layout/GameOver'
-import { DealOffer } from './layout/DealOffer'
-import { Cases } from './layout/Cases'
+import { useState } from "react"
+import { shuffleCases } from "./utils"
+import type { CaseProps } from "./types"
+import { DollarAmounts } from "./layout/DollarAmounts"
+import { GameOver } from "./layout/GameOver"
+import { DealOffer } from "./layout/DealOffer"
+import { Cases } from "./layout/Cases"
 
 const casesPerRound = [
   ...[...Array(7).keys()].slice(1).reverse(),
@@ -12,7 +12,6 @@ const casesPerRound = [
 ]
 
 function App() {
-
   const [cases, setCases] = useState<Array<CaseProps>>(shuffleCases())
   const [userCaseSelected, setUserCaseSelected] = useState(false)
   const [userCaseValue, setUserCaseValue] = useState(0)
@@ -32,8 +31,8 @@ function App() {
 
   const calculateDealAmount = (roundNum: number) => {
     const unrevealedAmounts = cases
-      .filter((curCase) => !curCase.opened)
-      .map((curCase) => curCase.amount)
+      .filter(curCase => !curCase.opened)
+      .map(curCase => curCase.amount)
     const avgAmount =
       unrevealedAmounts.reduce((sum, cur) => sum + cur, 0) /
       unrevealedAmounts.length
@@ -80,25 +79,45 @@ function App() {
 
   let gameStatus
   if (gameOver) {
-    gameStatus = <GameOver dealAccepted={dealAccepted} userCaseValue={userCaseValue} />
-  }
-  else if (!userCaseSelected) {
-    gameStatus = <p className='text-2xl'>Select your case.</p>
+    gameStatus = (
+      <GameOver dealAccepted={dealAccepted} userCaseValue={userCaseValue} />
+    )
+  } else if (!userCaseSelected) {
+    gameStatus = <p className="text-2xl">Select your case.</p>
   } else if (casesLeftInRound === 0) {
     const dealAmount = calculateDealAmount(round)
-    gameStatus = <DealOffer dealAmount={dealAmount} onAccept={acceptDeal} onReject={rejectDeal} />
+    gameStatus = (
+      <DealOffer
+        dealAmount={dealAmount}
+        onAccept={acceptDeal}
+        onReject={rejectDeal}
+      />
+    )
   } else {
-    gameStatus = <div><p className='text-2xl'>Open a case.</p><p>You have <b>{casesLeftInRound}</b> left to open before the next offer.</p></div>
+    gameStatus = (
+      <div>
+        <p className="text-2xl">Open a case.</p>
+        <p>
+          You have <b>{casesLeftInRound}</b> left to open before the next offer.
+        </p>
+      </div>
+    )
   }
 
   return (
-    <div className='flex h-screen'>
-      <div className='flex flex-col w-1/2 h-full p-3 justify-between'>
+    <div className="flex h-screen">
+      <div className="flex flex-col w-1/2 h-full p-3 justify-between">
         {gameStatus}
         <DollarAmounts cases={cases} />
       </div>
-      <div className='w-1/2 h-full'>
-        <Cases cases={cases} allCasesEnabled={!userCaseSelected} allCasesDisabled={casesLeftInRound === 0} onClick={!userCaseSelected ? selectUserCase : openCase} showAllAmounts={gameOver} />
+      <div className="w-1/2 h-full">
+        <Cases
+          cases={cases}
+          allCasesEnabled={!userCaseSelected}
+          allCasesDisabled={casesLeftInRound === 0}
+          onClick={!userCaseSelected ? selectUserCase : openCase}
+          showAllAmounts={gameOver}
+        />
       </div>
     </div>
   )

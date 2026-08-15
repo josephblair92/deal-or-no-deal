@@ -13,15 +13,15 @@ export const amounts = [
 ]
 
 export const shuffleCases = () => {
-    const amountsCopy = [...amounts]
-    const cases: Array<CaseProps> = []
+  const amountsCopy = [...amounts]
+  const cases: Array<CaseProps> = []
 
-    let count = 1
-    while (amountsCopy.length) {
-        const index = Math.floor(Math.random() * amountsCopy.length)
-        const [amount] = amountsCopy.splice(index, 1)
-        cases.push({ id: count, amount, opened: false, userCase: false })
-        count++
-    }
-    return cases
+  let count = 1
+  while (amountsCopy.length) {
+    const index = Math.floor(Math.random() * amountsCopy.length)
+    const [amount] = amountsCopy.splice(index, 1)
+    cases.push({ id: count, amount, opened: false, userCase: false })
+    count++
+  }
+  return cases
 }
