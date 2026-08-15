@@ -6,7 +6,7 @@ export interface DollarAmountProps {
 }
 
 export const DollarAmount = ({ amount, revealed }: DollarAmountProps) => {
-    return <div className={`${revealed ? 'bg-red-400' : 'bg-green-400'} p-2`}>
+    return <div className={`${revealed ? 'bg-red-400' : 'bg-green-400'} h-fit p-2`}>
         {formatterUSD.format(amount)}
     </div>
 }
