@@ -105,12 +105,8 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen">
-      <div className="flex flex-col w-1/2 h-full p-3 justify-between">
-        {gameStatus}
-        <DollarAmounts cases={cases} />
-      </div>
-      <div className="w-1/2 h-full">
+    <div className="flex flex-col gap-6 sm:flex-row h-screen">
+      <div className="sm:w-1/2 sm:h-full">
         <Cases
           cases={cases}
           allCasesEnabled={!userCaseSelected}
@@ -118,6 +114,10 @@ function App() {
           onClick={!userCaseSelected ? selectUserCase : openCase}
           showAllAmounts={gameOver}
         />
+      </div>
+      <div className="flex flex-col sm:w-1/2 h-full p-2 sm:p-3 justify-between">
+        {gameStatus}
+        <DollarAmounts cases={cases} />
       </div>
     </div>
   )

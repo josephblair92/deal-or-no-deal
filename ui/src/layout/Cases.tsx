@@ -17,7 +17,7 @@ export const Cases = ({
   onClick
 }: CasesProps) => {
   return (
-    <div className="flex flex-wrap gap-3 h-full p-3">
+    <div className="flex flex-wrap gap-1.5 sm:gap-3 sm:h-full p-2 sm:p-3">
       {cases.map((curCase: CaseProps) => (
         <Case
           {...curCase}

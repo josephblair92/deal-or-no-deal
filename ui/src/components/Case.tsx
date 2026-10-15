@@ -23,12 +23,12 @@ export const Case = ({
       : "bg-green-400"
   return (
     <button
-      className={`flex flex-col justify-center items-center min-w-32 h-24 ${bgColor} rounded-xl`}
+      className={`flex flex-col justify-center items-center w-16 h-12 sm:w-32 sm:h-24 ${bgColor} rounded-xl`}
       disabled={!enabled}
       onClick={() => onClick(id)}
     >
-      <span className="font-bold text-2xl">{id}</span>
-      <span>{showAmount ? formatterUSD.format(amount) : "?"}</span>
+      <span className="font-bold text-sm sm:text-2xl">{id}</span>
+      <span className="text-xs sm:text-base">{showAmount ? formatterUSD.format(amount) : "?"}</span>
     </button>
   )
 }
