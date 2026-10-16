@@ -28,7 +28,9 @@ export const Case = ({
       onClick={() => onClick(id)}
     >
       <span className="font-bold text-sm sm:text-2xl">{id}</span>
-      <span className="text-xs sm:text-base">{showAmount ? formatterUSD.format(amount) : "?"}</span>
+      <span className="text-xs sm:text-base">
+        {showAmount ? formatterUSD.format(amount) : "?"}
+      </span>
     </button>
   )
 }

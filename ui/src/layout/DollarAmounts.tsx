@@ -8,7 +8,9 @@ export interface DollarAmountsProps {
 export const DollarAmounts = ({ cases }: DollarAmountsProps) => {
   const sortedCases = cases.toSorted((a, b) => a.amount - b.amount)
   return (
-    <div className={`grid grid-flow-col grid-cols-4 sm:grid-cols-2 grid-rows-7 sm:grid-rows-13 gap-2`}>
+    <div
+      className={`grid grid-flow-col grid-cols-4 sm:grid-cols-2 grid-rows-7 sm:grid-rows-13 gap-2`}
+    >
       {sortedCases.map(curCase => (
         <DollarAmount
           amount={curCase.amount}
